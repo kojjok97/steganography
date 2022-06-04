@@ -8,7 +8,7 @@ import os
 import time
 import binascii
 
-
+# add function will add the option in listbox 
 def add(color_label,number_label,option_listbox):
     if color_label['text'] == 'NORMAL':
         msg.showwarning('경고', 'NORMAL이미지는 추가할 수 없습니다.')
@@ -20,10 +20,12 @@ def add(color_label,number_label,option_listbox):
     
     option_listbox.insert(END,'{}:{}'.format(number_label['text'],color_label['text']))
     
+# delete fuction will remove the selected list in listbox
 def delete(option_listbox):
     for index in reversed(option_listbox.curselection()):
         option_listbox.delete(index)
 
+# view function will combine all images 
 def view(self,option_listbox,image_label):
     image_convert_list = option_listbox.get(0,END)
     numbers, colors = [],[]
@@ -38,7 +40,7 @@ def view(self,option_listbox,image_label):
     image_label.config(image=self.new_img)
 
 
-
+# reset function will remove all listbox and image
 def reset(self,color_label,number_label,option_listbox,image_label):
     color_label['text'] = 'NORMAL'
     number_label['text'] = 0
@@ -49,6 +51,8 @@ def reset(self,color_label,number_label,option_listbox,image_label):
     self.new_img = ImageTk.PhotoImage(self.img)
     image_label.config(image=self.new_img)
 
+
+# decodeing two bpp lsb steganography image function
 def two_bpp_extract_window(img):
 
     two_bpp_extract_window = Toplevel()
@@ -138,6 +142,7 @@ def two_bpp_extract_window(img):
 
 
 
+# decodeing one bpp lsb steganography image function
 def one_bpp_extract_window(img):
 
     one_bpp_extract_window = Toplevel()
@@ -202,6 +207,7 @@ def main():
     
     img_save_obj.current_img = img_save_obj.img
 
+    # set up main window 
     root = Tk() 
     root.title('Stegarnography')
     root.geometry('640x480')
@@ -211,7 +217,7 @@ def main():
     image_label = Label(root, image=image_view)
     image_label.pack(fill='both')
 
-    # 1~7 선택 버튼 
+    # selecting number buttons 
     number_frame = Frame(root)
     number_frame.pack(side='right', padx=5, pady=5)
 
@@ -232,8 +238,7 @@ def main():
     number_down = Button(number_frame, image=down_image, text='',width=40, height=10,command=lambda:img_save_obj.convert_main_image(img_save_obj,'-',image_label,color_label,number_label))
     number_down.grid(row=2,column=0, padx=1, pady=1)
 
-    # 색 선택 버튼
-
+    # selecting color buttons
 
     color_up_image = PhotoImage(file='./ui/colorUp.png')
     color_down_image = PhotoImage(file='./ui/colorDown.png')
@@ -246,7 +251,7 @@ def main():
 
 
 
-    # 선택된 옵션 확인 
+    # selected options confirm listbox
 
     option_listbox_frame = Frame(root)
     option_listbox_frame.pack(side='left', padx=5, pady=1)
@@ -257,7 +262,7 @@ def main():
     option_listbox.pack(side='left',fill='both',expand=True)
 
 
-    # 버튼 프레임
+    # Image combine function buttons
     btn_frame = Frame(root)
     btn_frame.pack(side='right', padx=5, pady=5)
 
@@ -274,7 +279,7 @@ def main():
     reset_btn.grid(row=1,column=1,padx=2,pady=2,sticky=N+E+W+S)
 
 
-
+    # set up menu 
     menu = Menu(root)
     menu_file = Menu(menu, tearoff=0)
     menu_file.add_command(label='Open File',command=lambda :img_save_obj.open_image(img_save_obj,root,image_label,color_label,number_label,option_listbox))
