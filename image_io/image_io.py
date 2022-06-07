@@ -7,7 +7,7 @@ import binascii
 # open_image function will open a selected image
 def open_image(self,root,image_label,color_label,number_label,option_listbox):
     
-    file = filedialog.askopenfilename(title='이미지 파일을 선택하세요', filetypes=(('모든 파일', '*.*'),('png','*.png'),('jpeg','*.jpg')), initialdir='./')
+    file = filedialog.askopenfilename(title='이미지 파일을 선택하세요', filetypes=(('모든 파일', '*.*'),('png','*.png'),('jpg','*.jpg')), initialdir='./')
 
 #    try :
 #        img_file_name = PhotoImage(file=file)
@@ -41,20 +41,20 @@ def open_image(self,root,image_label,color_label,number_label,option_listbox):
 
 #save_image function will save the image in your directory
 def save_image(self):
-    file = filedialog.asksaveasfilename(title='저장할 디렉토리를 선택하세요', filetypes=(('png','*.png*'),('모든 파일','*.*')), initialdir='./')
+    file = filedialog.asksaveasfilename(title='저장할 디렉토리를 선택하세요', filetypes=(('png','*.png'),('모든 파일','*.*')), initialdir='./')
     self.current_img.save(file)
 
 
 #save_text_two_bpp function will save the extracted file in your directory
 def save_text_two_bpp(row_column,rgb_list,plane_list,img):
-    file = filedialog.asksaveasfilename(title='저장할 디렉토리를 선택하세요', filetypes=(('txt','*.txt*'),('png','*.png*'),('jpeg','*.jpg*'),('모든 파일','*.*')), initialdir='./')
+    file = filedialog.asksaveasfilename(title='저장할 디렉토리를 선택하세요', filetypes=(('txt','*.txt'),('png','*.png'),('jpeg','*.jpg'),('모든 파일','*.*')), initialdir='./')
     hex_data= extract_image.two_bpp_extract(plane_list,rgb_list,row_column,img)
     with open(file,'wb') as f:
         f.write(binascii.unhexlify(hex_data))
 
 #save_text_one_bpp function will save the extracted file in your directory
 def save_text_one_bpp(row_column,rgb,plane,img):
-    file= filedialog.asksaveasfilename(title='저장할 디렉토리를 선택하세요', filetypes=(('txt','*.txt*'),('png','*.png*'),('jpeg','*.jpg*'),('모든 파일','*.*')), initialdir='./')
+    file= filedialog.asksaveasfilename(title='저장할 디렉토리를 선택하세요', filetypes=(('txt','*.txt'),('png','*.png'),('jpeg','*.jpg'),('모든 파일','*.*')), initialdir='./')
     hex_data = extract_image.one_bpp_extract(row_column,rgb,plane,img)
     with open(file,'wb') as f:
         f.write(binascii.unhexlify(hex_data))
