@@ -133,8 +133,7 @@ def full_color_converter(color,img):
 
 
 def combine_image(numbers,colors,img):
-    start = time.time()
-    print(numbers,colors)
+
     images = [convert_image(numbers[i],colors[i],img) for i in range(len(numbers))]
     new_img = Image.new('1',img.size,'#fff')
     new_img_data = new_img.load()
@@ -149,12 +148,31 @@ def combine_image(numbers,colors,img):
 
     print(pixel)
 
-    print(time.time()-start)
+
     return new_img
         
+def hex_value_to_binary(self):
+    temp_buffer = ''
+    
+    for x in self.file:
+        temp_buffer += bin(x)
 
+    self.file = temp_buffer
 
-def save_image(self):
-    pass 
+def make_one_bpp_steganography_image(number,color,img,file):
+    self.hex_value_to_binary(self)
+    
+    img = Image.open('123.png')
+
+    channel = img.mode.index(color[:2])
+
+    file_count = 0 
+    for x in range(img.size[0]):
+        for y in range(img.size[1]):
+            pixel = img.getpixel((x,y))
+
+            bin(pixel[channel])
+
+            file_count += 1 
 
 

@@ -193,8 +193,63 @@ def one_bpp_extract_window(img):
 
     one_bpp_extract_window.mainloop()     
    
+def make_one_bpp_steganography_window(img):
+    
+    datas = type('Make_steganography',(),dict(file=None, open_hidden_file=image_io.open_hidden_file,make_one_bpp_steganography_image=convert_image.make_one_bpp_steganography_image,hex_value_to_binary=convert_image.hex_value_to_binary))
+
+    one_bpp_steganography_window = Toplevel()
+    one_bpp_steganography_window.geometry('450x300')
+    one_bpp_steganography_window.title('1BPP LSB Steganography')
+    rgb_list = ['Red','Green','Blue']
+    plane_bit_list = [x for x in range(1,9)]
 
 
+    bottom_frame = Frame(one_bpp_steganography_window)
+    bottom_frame.pack(side='top',fill='x')
+
+    bit_plane_frame = LabelFrame(bottom_frame, text='Planes')
+    bit_plane_frame.pack(side='left',padx=10,pady=10,expand=True)
+
+
+    rgb_combobox = ttk.Combobox(bit_plane_frame, height=3, values=rgb_list, state='readonly')
+    rgb_combobox.current(0) 
+    rgb_combobox.pack()
+
+    plane_combobox = ttk.Combobox(bit_plane_frame, height=8, values=plane_bit_list, state='readonly')
+    plane_combobox.current(0)
+    plane_combobox.pack()
+
+
+    order_setting_frame = LabelFrame(bottom_frame,text='order_setting')
+    order_setting_frame.pack(side='right',padx=10,pady=10,expand=True)
+
+    extract_by_label = Label(order_setting_frame, text='Extract by')
+    row_column_var = StringVar()
+    row_radio = Radiobutton(order_setting_frame, text='Row', value='ROW', variable=row_column_var)
+    row_radio.select()
+    column_radio = Radiobutton(order_setting_frame, text='Column', value='COLUMN', variable=row_column_var)
+
+    extract_by_label.grid(row=0, column=0)
+    row_radio.grid(row=0, column=1)
+    column_radio.grid(row=0, column=2)
+
+
+    btn_frame = Frame(one_bpp_steganography_window)
+    btn_frame.pack(side='bottom',fill='x',padx=5,pady=5,expand=True)
+    
+    file_name = Listbox(btn_frame, width=30, height=1)
+    open_image_btn = Button(btn_frame, width=10, height=1, text='Open Image',command=lambda : file_name.insert(image_io.open_hidden_file(datas)))   
+    save_text_btn = Button(btn_frame, width=10, height=1, text='Save Text',command=lambda : datas.make_one_bpp_steganography_image(row_column_var.get(),rgb_combobox.get(),plane_combobox.get(),img))
+    save_text_btn.grid(row= 5, column= 2, padx=5, pady=5, sticky=N+E+W+S)
+    open_image_btn.grid(row= 5, column= 3, padx=5, pady=5, sticky=N+E+W+S)
+    file_name.grid(row= 5, column= 4, padx=5, pady=5, sticky=N+E+W+S)
+
+    one_bpp_steganography_window.mainloop()     
+
+
+
+def make_two_bpp_steganography_window(img):
+    pass 
 
 def main():
     
@@ -287,13 +342,16 @@ def main():
     menu_file.add_separator()
     menu_file.add_command(label='Exit', command=root.quit)
 
-    menu_analyse = Menu(menu, tearoff=0)
-    menu_analyse.add_command(label='2bpp Steganography',command=lambda : two_bpp_extract_window(img_save_obj.img))
-    menu_analyse.add_command(label='1bpp Steganography',command=lambda : one_bpp_extract_window(img_save_obj.img))
+    menu_bpp_steganography = Menu(menu, tearoff=0)
+    menu_bpp_steganography.add_command(label='1bpp Steganography',command=lambda : one_bpp_extract_window(img_save_obj.img))
+    menu_bpp_steganography.add_command(label='2bpp Steganography',command=lambda : two_bpp_extract_window(img_save_obj.img))
+    menu_bpp_steganography.add_command(label='1bpp Steganography',command=lambda : make_one_bpp_steganography_window(img_save_obj.img))
+    menu_bpp_steganography.add_command(label='1bpp Steganography',command=lambda : make_two_bpp_steganography_window(img_save_obj.img))
+    
 
 
     menu.add_cascade(label='File', menu= menu_file)
-    menu.add_cascade(label='Analyse', menu= menu_analyse)
+    menu.add_cascade(label='Analyse', menu= menu_bpp_steganography)
 
 
     root.config(menu=menu)

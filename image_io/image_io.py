@@ -37,6 +37,14 @@ def open_image(self,root,image_label,color_label,number_label,option_listbox):
     number_label['text'] = 0
     option_listbox.delete(0,END)
 
+def open_hidden_file(self):
+
+    file = filedialog.askopenfile(title='이미지 파일을 선택하세요', filetypes=(('모든 파일', '*.*'),('png','*.png'),('jpg','*.jpg')), initialdir='./')
+    return file
+
+    
+
+    
             
 
 #save_image function will save the image in your directory
